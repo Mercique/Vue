@@ -5,13 +5,16 @@
       <input v-model.number="operand2" type="number"/>
       = {{ result }}
     </div>
+    <div class="error">
+      {{ error }}
+    </div>
     <div class="keyboard">
-      <button @click="sum(operand1, operand2)">+</button>
-      <button @click="sub(operand1, operand2)">-</button>
-      <button @click="divide(operand1, operand2)">/</button>
-      <button @click="multiply(operand1, operand2)">*</button>
-      <button @click="pow(operand1, operand2)">^*</button>
-      <button @click="integerDivision(operand1, operand2)">//</button>
+      <button @click="calculate('+')">+</button>
+      <button @click="calculate('-')">-</button>
+      <button @click="calculate('/')">/</button>
+      <button @click="calculate('*')">*</button>
+      <button @click="calculate('^*')">^*</button>
+      <button @click="calculate('//')">//</button>
     </div>
   </div>
 </template>
@@ -23,32 +26,64 @@ export default {
     return {
       operand1: 0,
       operand2: 0,
+      error: '',
       result: 0
     }
   },
   methods: {
-    sum(operand1, operand2) {
-      this.result = operand1 + operand2
-    },
-    sub(operand1, operand2) {
-      this.result = operand1 - operand2
-    },
-    divide(operand1, operand2) {
-      if (isFinite(operand1 / operand2)) {
-        this.result = operand1 / operand2
-      } else {
-        this.result = 'ERROR'
+    calculate(operation) {
+      this.error = '';
+      switch(operation) {
+        case '+':
+          this.sum();
+          break;
+        case '-':
+          this.sub();
+          break;
+        case '/':
+          this.divide();
+          break;
+        case '*':
+          this.multiply();
+          break;
+        case '^*':
+          this.pow();
+          break;
+        case '//':
+          this.integerDivision();
+          break;
       }
     },
-    multiply(operand1, operand2) {
-      this.result = operand1 * operand2
+    sum() {
+      this.result = this.operand1 + this.operand2;
     },
-    pow(operand1, operand2) {
-      //this.result = Math.pow(operand1, operand2)
-      this.result = operand1 ** operand2
+    sub() {
+      this.result = this.operand1 - this.operand2;
     },
-    integerDivision(operand1, operand2) {
-      this.result = Math.floor(operand1 / operand2)
+    divide() {
+      const {operand1, operand2} = this;
+      if (operand2 === 0) {
+        this.error = 'На 0 делить нельзя';
+        return;
+      }
+      
+      this.result = operand1 / operand2;
+      // if (isFinite(this.operand1 / this.operand2)) {
+      //   this.result = this.operand1 / this.operand2;
+      // } else {
+      //   this.result = 'ERROR';
+      // }
+
+    },
+    multiply() {
+      this.result = this.operand1 * this.operand2;
+    },
+    pow() {
+      //this.result = Math.pow(operand1, operand2);
+      this.result = this.operand1 ** this.operand2;
+    },
+    integerDivision() {
+      this.result = Math.floor(this.operand1 / this.operand2);
     }
   }
 }
