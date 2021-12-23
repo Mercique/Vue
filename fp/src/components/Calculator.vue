@@ -24,23 +24,23 @@
         <button 
           v-for="key in keys" 
           :key="key"
-          @click="addNums(key, picked)"
+          @click="addNums(key)"
+          :disabled="!picked"
         >
           {{ key }}
         </button>
-        <button @click="delNums(picked)">&#8592;</button>
+        <button @click="delNums()" :disabled="!picked">&#8592;</button>
       </div>
       <div class="keyboard__switch-inputs">
         <label>
-          <input type="radio" name="radio" value="one" v-model="picked">
+          <input type="radio" name="radio" value="operand1" v-model="picked">
           Операнд 1
         </label>
         <label>
-          <input type="radio" name="radio" value="two" v-model="picked">
+          <input type="radio" name="radio" value="operand2" v-model="picked">
           Операнд 2
         </label>
       </div>
-      <div class="check-radio" v-if="checkRadio">ВЫБЕРИТЕ ОПЕРАНД!</div>
     </div>
     <div class="logs">
       <div class="logs__items" v-for="(item, id, idx) in logs" :key="`list_${id}`">
@@ -62,7 +62,6 @@ export default {
       error: "",
       result: 0,
       checked: false,
-      checkRadio: false,
       picked: '',
       logs: {}
     };
@@ -113,25 +112,11 @@ export default {
     integerDivision() {
       this.result = Math.floor(this.operand1 / this.operand2);
     },
-    addNums(key, picked) {
-      this.checkRadio = false;
-      if (picked == 'one') {
-        this.operand1 = +((this.operand1 += key).replace(/^0/, ''));
-      } else if (picked == 'two') {
-        this.operand2 = +((this.operand2 += key).replace(/^0/, ''));
-      } else {
-        this.checkRadio = true;
-      }
+    addNums(key) {
+      this[this.picked] = +((this[this.picked] += key).replace(/^0/, ''));
     },
-    delNums(picked) {
-      this.checkRadio = false;
-      if (picked == 'one') {
-        this.operand1 = +(String(this.operand1).slice(0, -1));
-      } else if (picked == 'two') {
-        this.operand2 = +(String(this.operand2).slice(0, -1));
-      } else {
-        this.checkRadio = true;
-      }
+    delNums() {
+      this[this.picked] = +(String(this[this.picked]).slice(0, -1));
     }
   }
 };
