@@ -7,7 +7,7 @@
           <div class="head__box">Value</div>
       </div>
       <div class="box item" v-for="item, idx in items" :key="idx">
-          <div class="item__box">{{ idx }}</div>
+          <div class="item__box">{{ item.id }}</div>
           <div class="item__box">{{ item.date }}</div>
           <div class="item__box">{{ item.category }}</div>
           <div class="item__box">{{ item.value }}</div>

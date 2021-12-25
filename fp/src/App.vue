@@ -5,8 +5,14 @@
         <h1 class="title">My personal costs</h1>
       </header>
       <main>
-        <add-payment-form @addNewPayment="addToPaymentList"/>
-        <payments-display :items="paymentsList" />
+        <add-payment-form />
+        <payments-display :items="currentElements" />
+        <pagination
+          :cur="page"
+          :n="n"
+          :length="paymentsList.length"
+          @paginate="changePage"
+        />
       </main>
     </div>
   </div>
@@ -15,49 +21,40 @@
 <script>
 import AddPaymentForm from "./components/AddPaymentForm.vue";
 import PaymentsDisplay from "./components/PaymentsDisplay.vue";
+import { mapMutations, mapGetters, mapActions } from "vuex";
+import Pagination from "./components/Pagination.vue";
 
 export default {
-  components: { PaymentsDisplay, AddPaymentForm },
+  components: { PaymentsDisplay, AddPaymentForm, Pagination },
   name: "App",
   data() {
     return {
       show: true,
-      paymentsList: [],
+      page: 1,
+      n: 10,
     };
   },
-  methods: {
-    fetchData() {
-      return [
-        {
-          date: "28.03.2020",
-          category: "Food",
-          value: 169,
-        },
-        {
-          date: "24.03.2020",
-          category: "Transport",
-          value: 360,
-        },
-        {
-          date: "24.03.2020",
-          category: "Food",
-          value: 532,
-        },
-        {
-          date: "24.03.2020",
-          category: "Internet",
-          value: 532,
-        },
-      ];
+  computed: {
+    ...mapGetters({ paymentsList: "getPaymentsList" }),
+    total() {
+      return this.$store.getters.getPaymentsListFullValuePrice;
     },
-    addToPaymentList(props) {
-      console.log('run')
-      // this.paymentsList.push(data)
-      this.paymentsList = [...this.paymentsList, props];
+    currentElements() {
+      const { n, page } = this;
+      return this.paymentsList.slice(n * (page - 1), n * (page - 1) + n);
+    },
+  },
+  methods: {
+    ...mapMutations({ fetch: "setPaymentsListData" }),
+    ...mapActions(["fetchData"]),
+    changePage(p) {
+      this.page = p;
     },
   },
   created() {
-    this.paymentsList = this.fetchData();
+    this.fetchData();
+    // this.$store.dispatch('fetchData');
+    // this.$store.commit('setPaymentsListData', this.fetchData());
   },
 };
 </script>

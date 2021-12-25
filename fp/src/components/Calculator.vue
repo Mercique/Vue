@@ -29,7 +29,7 @@
         >
           {{ key }}
         </button>
-        <button @click="delNums()" :disabled="!picked">&#8592;</button>
+        <button @click="delNums" :disabled="!picked">&#8592;</button>
       </div>
       <div class="keyboard__switch-inputs">
         <label>
