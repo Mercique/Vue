@@ -31,7 +31,7 @@ export default {
     return {
       show: true,
       page: 1,
-      n: 10,
+      n: 3,
     };
   },
   computed: {
