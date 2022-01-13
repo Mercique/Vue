@@ -2,9 +2,9 @@
   <div id="app">
     <div class="wrapper">
       <header>
-        <a href="#dashboard">dashboard</a> / 
-        <a href="#about">about</a> /
-        <a href="#notfound">notfound</a>
+        <a href="dashboard">dashboard</a> / 
+        <a href="about">about</a> /
+        <a href="notfound">notfound</a>
         <h1 class="title">My personal costs</h1>
       </header>
       <main>
@@ -31,12 +31,21 @@ export default {
   },
   methods: {
     setPage() {
-      this.page = location.hash.slice(1);
+      this.page = location.pathname.slice(1);
     }
   },
   mounted() {
     this.setPage();
-    window.addEventListener('hashchange', () => {
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        history.pushState({}, '', link.href);
+        this.setPage();
+      });
+    });
+    this.setPage();
+    window.addEventListener('popstate', () => {
       this.setPage();
     })
   }
