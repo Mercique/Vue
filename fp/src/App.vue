@@ -2,60 +2,44 @@
   <div id="app">
     <div class="wrapper">
       <header>
+        <a href="#dashboard">dashboard</a> / 
+        <a href="#about">about</a> /
+        <a href="#notfound">notfound</a>
         <h1 class="title">My personal costs</h1>
       </header>
       <main>
-        <add-payment-form />
-        <payments-display :items="currentElements" />
-        <pagination
-          :cur="page"
-          :n="n"
-          :length="paymentsList.length"
-          @paginate="changePage"
-        />
+        <Dashboard v-if="page === 'dashboard'" />
+        <About v-else-if="page === 'about'" />
+        <NotFound v-else />
       </main>
     </div>
   </div>
 </template>
 
 <script>
-import AddPaymentForm from "./components/AddPaymentForm.vue";
-import PaymentsDisplay from "./components/PaymentsDisplay.vue";
-import { mapMutations, mapGetters, mapActions } from "vuex";
-import Pagination from "./components/Pagination.vue";
+import Dashboard from "./views/Dashboard.vue";
+import About from "./views/About.vue";
+import NotFound from "./views/NotFound.vue";
 
 export default {
-  components: { PaymentsDisplay, AddPaymentForm, Pagination },
   name: "App",
+  components: { Dashboard, About, NotFound },
   data() {
     return {
-      show: true,
-      page: 1,
-      n: 3,
+      page: ""
     };
   },
-  computed: {
-    ...mapGetters({ paymentsList: "getPaymentsList" }),
-    total() {
-      return this.$store.getters.getPaymentsListFullValuePrice;
-    },
-    currentElements() {
-      const { n, page } = this;
-      return this.paymentsList.slice(n * (page - 1), n * (page - 1) + n);
-    },
-  },
   methods: {
-    ...mapMutations({ fetch: "setPaymentsListData" }),
-    ...mapActions(["fetchData"]),
-    changePage(p) {
-      this.page = p;
-    },
+    setPage() {
+      this.page = location.hash.slice(1);
+    }
   },
-  created() {
-    this.fetchData();
-    // this.$store.dispatch('fetchData');
-    // this.$store.commit('setPaymentsListData', this.fetchData());
-  },
+  mounted() {
+    this.setPage();
+    window.addEventListener('hashchange', () => {
+      this.setPage();
+    })
+  }
 };
 </script>
 
