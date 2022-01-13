@@ -18,13 +18,17 @@
 
 <script>
 import { mapMutations, mapActions, mapGetters } from "vuex";
+
 export default {
   name: "AddPaymentForm",
   data() {
     return {
+      id: "",
       date: "",
       category: "",
       value: "",
+      defaultValue: 100,
+      count: 1,
       visible: false,
     };
   },
@@ -42,10 +46,13 @@ export default {
     ...mapMutations(["addPaymentListData"]),
     ...mapActions(["fetchCategory"]),
     onClick() {
+      this.id = this.$store.state.getLastID + this.count;
+      this.count++;
       const data = {
+        id: this.id,
         date: this.date || this.getCurrentDate,
         category: this.category,
-        value: this.value,
+        value: this.value || this.defaultValue,
       };
       this.addPaymentListData(data);
       this.$emit("addNewPayment", data);
@@ -55,6 +62,12 @@ export default {
     if (!this.getCategoryList?.length) {
       await this.fetchCategory();
       this.category = this.categoryList[0];
+    }
+    if (this.$route.params?.category) {
+      this.category = this.$route.params.category;
+    }
+    if (this.$route.query?.value) {
+      this.value = this.$route.query.value;
     }
   },
 };

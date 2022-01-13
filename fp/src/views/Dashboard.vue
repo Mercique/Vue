@@ -1,5 +1,6 @@
 <template>
   <main>
+    <h1 class="title">My personal costs</h1>
     <add-payment-form />
     <payments-display :items="currentElements" />
     <pagination
@@ -43,8 +44,10 @@ export default {
       this.page = p;
     },
   },
-  created() {
-    this.fetchData();
+  async created() {
+    if (this.$route.params?.page) {
+      this.page = Number(this.$route.params.page);
+    }
     // this.$store.dispatch('fetchData');
     // this.$store.commit('setPaymentsListData', this.fetchData());
   },

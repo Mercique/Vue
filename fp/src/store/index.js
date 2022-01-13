@@ -5,12 +5,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    getLastID: 0,
     paymentsList: [],
     categoryList: [],
   },
   mutations: {
     setPaymentsListData(state, payload) {
       state.paymentsList = payload;
+      state.getLastID = payload.length;
     },
     addPaymentListData(state, payload) {
       state.paymentsList.push(payload);
@@ -22,8 +24,8 @@ export default new Vuex.Store({
       state.paymentsList[0] = payload;
       state.paymentsList = [...state.paymentsList];
     },
-    setCategoryData(state, paylaod) {
-      state.categoryList = paylaod;
+    setCategoryData(state, payload) {
+      state.categoryList = payload;
     },
   },
   getters: {
@@ -39,7 +41,7 @@ export default new Vuex.Store({
       return new Promise((resolve) => {
         setTimeout(() => {
           const items = [];
-          const obj = {
+          const dataBase = {
             "page1": [
               { "id": 1, "date": "20.03.2020", "category": "Food", "value": 169 },
               { "id": 2, "date": "21.03.2020", "category": "Navigation", "value": 50 },
@@ -54,14 +56,21 @@ export default new Vuex.Store({
               { "id": 9, "date": "28.03.2020", "category": "Food", "value": 2000 },
               { "id": 10, "date": "29.03.2020", "category": "Food", "value": 8 }
             ],
-          }
-          for(let el in obj) {
-            for(let i = 0; i < obj[el].length; i++) {
-              items.push(obj[el][i]);
+            "page3": [
+              { "id": 11, "date": "30.03.2020", "category": "Entertaiment", "value": 969 },
+              { "id": 12, "date": "31.03.2020", "category": "Education", "value": 1500 },
+              { "id": 13, "date": "01.04.2020", "category": "Food", "value": 20 },
+              { "id": 14, "date": "02.04.2020", "category": "Food", "value": 2000 },
+              { "id": 15, "date": "03.04.2020", "category": "Food", "value": 8 }
+            ],
+          };
+          for(let page in dataBase) {
+            for(let i = 0; i < dataBase[page].length; i++) {
+              items.push(dataBase[page][i]);
             }
           }
           resolve(items);
-        }, 2000);
+        }, 0);
       }).then((res) => commit("setPaymentsListData", res));
     },
     fetchCategory({ commit }) {
@@ -69,7 +78,7 @@ export default new Vuex.Store({
         setTimeout(() => {
           const items = ["Sport", "Education", "Internet", "Food", "Transport"];
           resolve(items);
-        }, 2000);
+        }, 0);
       }).then((res) => commit("setCategoryData", res));
     },
   },

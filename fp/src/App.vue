@@ -2,52 +2,36 @@
   <div id="app">
     <div class="wrapper">
       <header>
-        <a href="dashboard">dashboard</a> / 
-        <a href="about">about</a> /
-        <a href="notfound">notfound</a>
-        <h1 class="title">My personal costs</h1>
+        <router-link to="/dashboard">Dashboard</router-link> /
+        <router-link to="/about">About</router-link> /
+        <router-link to="/fastcost">Fast Cost</router-link> /
+        <span @click="goToPageFound">notfound</span>
       </header>
       <main>
-        <Dashboard v-if="page === 'dashboard'" />
-        <About v-else-if="page === 'about'" />
-        <NotFound v-else />
+        <router-view />
       </main>
     </div>
   </div>
 </template>
 
 <script>
-import Dashboard from "./views/Dashboard.vue";
-import About from "./views/About.vue";
-import NotFound from "./views/NotFound.vue";
-
+import { mapActions } from 'vuex';
 export default {
   name: "App",
-  components: { Dashboard, About, NotFound },
   data() {
-    return {
-      page: ""
-    };
+    return {};
   },
   methods: {
-    setPage() {
-      this.page = location.pathname.slice(1);
-    }
-  },
-  mounted() {
-    this.setPage();
-    const links = document.querySelectorAll('a');
-    links.forEach(link => {
-      link.addEventListener('click', event => {
-        event.preventDefault();
-        history.pushState({}, '', link.href);
-        this.setPage();
+    ...mapActions(["fetchData"]),
+    goToPageFound() { 
+      if(this.$route.name === 'notfound') return
+      this.$router.push({
+        name: "notfound",
       });
-    });
-    this.setPage();
-    window.addEventListener('popstate', () => {
-      this.setPage();
-    })
+    },
+  },
+  async created() {
+    await this.fetchData();
   }
 };
 </script>
