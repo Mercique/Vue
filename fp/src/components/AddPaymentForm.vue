@@ -27,9 +27,9 @@ export default {
       date: "",
       category: "",
       value: "",
-      defaultValue: 100,
       count: 1,
       visible: false,
+      check: true,
     };
   },
   computed: {
@@ -46,13 +46,17 @@ export default {
     ...mapMutations(["addPaymentListData"]),
     ...mapActions(["fetchCategory"]),
     onClick() {
-      this.id = this.$store.state.getLastID + this.count;
-      this.count++;
+      if (this.check) {
+        this.check = false;
+        this.id = this.$store.state.getLastID + this.count;
+      } else {
+        this.id += this.count;
+      }
       const data = {
         id: this.id,
         date: this.date || this.getCurrentDate,
         category: this.category,
-        value: this.value || this.defaultValue,
+        value: this.value,
       };
       this.addPaymentListData(data);
       this.$emit("addNewPayment", data);

@@ -3,14 +3,38 @@
       <router-link :to="{
           name: 'addPayment',
           params: {
-            category: 'Internet',
+            category: 'Food',
           },
           query: {
-            value: 1000,
+            value: 200,
           },
         }"
       >
-        Add Category "Internet"
+        Add Category "Food"
+      </router-link><br>
+      <router-link :to="{
+          name: 'addPayment',
+          params: {
+            category: 'Transport',
+          },
+          query: {
+            value: 50,
+          },
+        }"
+      >
+        Add Category "Transport"
+      </router-link><br>
+            <router-link :to="{
+          name: 'addPayment',
+          params: {
+            category: 'Entertainment',
+          },
+          query: {
+            value: 2000,
+          },
+        }"
+      >
+        Add Category "Entertainment"
       </router-link>
   </div>
 </template>
