@@ -1,53 +1,54 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Dashboard from '../views/Dashboard.vue';
-import About from '../views/About.vue';
-import NotFound from '../views/NotFound.vue';
-import FastCost from '../views/FastCost.vue';
-import AddPayment from '../components/AddPaymentForm.vue';
-
-
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: '/',
-        component: Dashboard,
+        component: () =>
+            import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
     },
     {
         path: '/dashboard',
         name: "dashboard",
-        component: Dashboard,
+        component: () =>
+            import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
     },
     {
         path: '/dashboard/:page',
         name: "dashboard",
-        component: Dashboard
+        component: () =>
+            import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
     },
     {
         path: '/about',
         name: "about",
-        component: About
+        component: () =>
+            import(/* webpackChunkName: "Dashboard" */ "../views/About.vue"),
     },
     {
         path: '/fastcost',
         name: "fastсost",
-        component: FastCost,
+        component: () =>
+            import(/* webpackChunkName: "Dashboard" */ "../views/FastCost.vue"),
     },
     {
         path: '/add/payment/:category',
         name: "addPayment",
-        component: AddPayment,
+        component: () =>
+            import(/* webpackChunkName: "Dashboard" */ "../components/AddPaymentForm.vue"),
     },
     {
         path: '/notfound',
         name: "notfound",
-        component: NotFound
+        component: () =>
+            import(/* webpackChunkName: "Dashboard" */ "../views/NotFound.vue"),
     },
     {
         path: '*',
-        component: NotFound
+        component: () =>
+            import(/* webpackChunkName: "Dashboard" */ "../views/NotFound.vue"),
     },
 ];
 
