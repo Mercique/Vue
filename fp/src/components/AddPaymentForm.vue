@@ -24,12 +24,9 @@ export default {
   name: "AddPaymentForm",
   data() {
     return {
-      id: "",
       date: "",
       category: "",
       value: "",
-      count: 1,
-      check: true,
     };
   },
   computed: {
@@ -46,14 +43,7 @@ export default {
     ...mapMutations(["addPaymentListData"]),
     ...mapActions(["fetchCategory"]),
     onClick() {
-      if (this.check) {
-        this.check = false;
-        this.id = this.$store.state.getLastID + this.count;
-      } else {
-        this.id += this.count;
-      }
       const data = {
-        id: this.id,
         date: this.date || this.getCurrentDate,
         category: this.category,
         value: this.value,

@@ -5,14 +5,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    getLastID: 0,
     paymentsList: [],
     categoryList: [],
   },
   mutations: {
     setPaymentsListData(state, payload) {
       state.paymentsList = payload;
-      state.getLastID = payload.length;
     },
     addPaymentListData(state, payload) {
       state.paymentsList.push(payload);

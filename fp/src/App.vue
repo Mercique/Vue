@@ -17,17 +17,22 @@
           v-if="componentName"
         />
       </transition>
+      <transition name="fade">
+        <context-menu />
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
+import ContextMenu from './components/ContextMenu.vue';
 export default {
   components: {
     ModalWindowAddPaymentForm: () =>
       import(
         /* webpackChunkName: "Modal" */ "./components/ModalWindowAddPaymentForm.vue"
       ),
+    ContextMenu,
   },
   name: "App",
   data() {
@@ -37,8 +42,8 @@ export default {
     };
   },
   methods: {
-    goToPageFound() { 
-      if(this.$route.name === 'notfound') return
+    goToPageFound() {
+      if (this.$route.name === "notfound") return;
       this.$router.push({
         name: "notfound",
       });

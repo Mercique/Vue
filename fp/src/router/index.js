@@ -7,48 +7,48 @@ const routes = [
     {
         path: '/',
         component: () =>
-            import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
+            import("../views/Dashboard.vue"),
     },
     {
         path: '/dashboard',
         name: "dashboard",
         component: () =>
-            import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
+            import("../views/Dashboard.vue"),
     },
     {
         path: '/dashboard/:page',
         name: "dashboard",
         component: () =>
-            import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
+            import("../views/Dashboard.vue"),
     },
     {
         path: '/about',
         name: "about",
         component: () =>
-            import(/* webpackChunkName: "Dashboard" */ "../views/About.vue"),
+            import("../views/About.vue"),
     },
     {
         path: '/fastcost',
         name: "fastсost",
         component: () =>
-            import(/* webpackChunkName: "Dashboard" */ "../views/FastCost.vue"),
+            import("../views/FastCost.vue"),
     },
     {
         path: '/add/payment/:category',
         name: "addPayment",
         component: () =>
-            import(/* webpackChunkName: "Dashboard" */ "../components/AddPaymentForm.vue"),
+            import("../components/AddPaymentForm.vue"),
     },
     {
         path: '/notfound',
         name: "notfound",
         component: () =>
-            import(/* webpackChunkName: "Dashboard" */ "../views/NotFound.vue"),
+            import("../views/NotFound.vue"),
     },
     {
         path: '*',
         component: () =>
-            import(/* webpackChunkName: "Dashboard" */ "../views/NotFound.vue"),
+            import("../views/NotFound.vue"),
     },
 ];
 
