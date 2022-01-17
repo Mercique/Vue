@@ -12,37 +12,19 @@ export default {
   },
   methods: {
     setup(category) {
-      const box = [];
-      for (let i = 0; i < category.length; i++) {
-        box.push({
-          category: category[i],
-          total: 0,
-        });
-        for (let j = 0; j < this.records.length; j++) {
-          if (box[i].category === this.records[j].category) {
-            box[i].total += this.records[j].value;
-          }
-        }
-      }
-      //   console.log(this.records);
-      //   console.log(
-      //     category.map((el) => {
-      //       return this.records.reduce((total, item) => {
-      //         if (el === item.category) {
-      //           total += item.value;
-      //         } else {
-      //           total += 0;
-      //         }
-      //       }, 0);
-      //     })
-      //   );
-
       this.renderChart({
         labels: category,
         datasets: [
           {
             label: "Расходы по категориям",
-            data: box.map(el => el.total),
+            data: category.map((el) => {
+              return this.records.reduce((total, cur) => {
+                if (el === cur.category) {
+                  total += cur.value;
+                }
+                return total;
+              }, 0);
+            }),
             backgroundColor: [
               "rgba(255, 99, 132, 0.5)",
               "rgba(54, 162, 235, 0.5)",
