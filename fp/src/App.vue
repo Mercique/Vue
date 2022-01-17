@@ -20,14 +20,12 @@
       <transition name="fade">
         <context-menu />
       </transition>
-      <pie-chart />
     </div>
   </div>
 </template>
 
 <script>
 import ContextMenu from "./components/ContextMenu.vue";
-import PieChart from './components/PieChart.vue';
 export default {
   components: {
     ModalWindowAddPaymentForm: () =>
@@ -35,7 +33,6 @@ export default {
         /* webpackChunkName: "Modal" */ "./components/ModalWindowAddPaymentForm.vue"
       ),
     ContextMenu,
-    PieChart,
   },
   name: "App",
   data() {

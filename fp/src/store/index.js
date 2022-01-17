@@ -48,17 +48,17 @@ export default new Vuex.Store({
               { "id": 5, "date": "24.03.2020", "category": "Sport", "value": 1450 }
             ],
             "page2": [
-              { "id": 6, "date": "25.03.2020", "category": "Entertaiment", "value": 969 },
+              { "id": 6, "date": "25.03.2020", "category": "Entertainment", "value": 969 },
               { "id": 7, "date": "26.03.2020", "category": "Education", "value": 1500 },
               { "id": 8, "date": "27.03.2020", "category": "Food", "value": 20 },
-              { "id": 9, "date": "28.03.2020", "category": "Food", "value": 2000 },
+              { "id": 9, "date": "28.03.2020", "category": "Transport", "value": 2000 },
               { "id": 10, "date": "29.03.2020", "category": "Food", "value": 8 }
             ],
             "page3": [
               { "id": 11, "date": "30.03.2020", "category": "Entertaiment", "value": 969 },
               { "id": 12, "date": "31.03.2020", "category": "Education", "value": 1500 },
               { "id": 13, "date": "01.04.2020", "category": "Food", "value": 20 },
-              { "id": 14, "date": "02.04.2020", "category": "Food", "value": 2000 },
+              { "id": 14, "date": "02.04.2020", "category": "Transport", "value": 2000 },
               { "id": 15, "date": "03.04.2020", "category": "Food", "value": 8 }
             ],
           };

@@ -10,6 +10,7 @@
       @paginate="changePage"
     />
     <button @click="openModal">Add new cost +</button>
+    <pie-chart :items="currentElements" />
   </main>
 </template>
 
@@ -17,11 +18,13 @@
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import Pagination from "../components/Pagination.vue";
+import PieChart from '../components/PieChart.vue';
 export default {
   name: "Dashboard",
   components: { 
     PaymentsDisplay,
     Pagination,
+    PieChart,
   },
   data() {
     return {
