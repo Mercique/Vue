@@ -70,8 +70,6 @@ export default {
 
 <style lang="scss" scoped>
 #app {
-  display: flex;
-  justify-content: center;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

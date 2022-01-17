@@ -1,16 +1,18 @@
 <template>
   <main>
-    <h1 class="title">My personal costs</h1>
-    <!-- <add-payment-form /> -->
-    <payments-display :items="currentElements" />
-    <pagination
-      :cur="page"
-      :n="n"
-      :length="paymentsList.length"
-      @paginate="changePage"
-    />
-    <button @click="openModal">Add new cost +</button>
-    <pie-chart :items="currentElements" />
+    <div>
+      <h1 class="title">My personal costs</h1>
+      <!-- <add-payment-form /> -->
+      <payments-display :items="currentElements" />
+      <pagination
+        :cur="page"
+        :n="n"
+        :length="paymentsList.length"
+        @paginate="changePage"
+      />
+      <button @click="openModal">Add new cost +</button>
+    </div>
+    <pie-chart />
   </main>
 </template>
 
@@ -18,10 +20,10 @@
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import Pagination from "../components/Pagination.vue";
-import PieChart from '../components/PieChart.vue';
+import PieChart from "../components/PieChart.vue";
 export default {
   name: "Dashboard",
-  components: { 
+  components: {
     PaymentsDisplay,
     Pagination,
     PieChart,
@@ -71,4 +73,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

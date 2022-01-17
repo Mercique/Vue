@@ -1,4 +1,6 @@
-<canvas ref="canvas" width="400" height="400"></canvas>
+<template>
+  <canvas ref="canvas"></canvas>
+</template>
 
 <script>
 import { Pie } from "vue-chartjs";
