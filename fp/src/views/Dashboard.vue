@@ -63,7 +63,6 @@ export default {
     },
   },
   async created() {
-    await this.fetchData();
     if (this.$route.params?.page) {
       this.page = Number(this.$route.params.page);
     }
