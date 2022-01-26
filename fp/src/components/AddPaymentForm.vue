@@ -1,20 +1,14 @@
 <template>
-  <div class="wrapper">
-    <input placeholder="Paument date" v-model="date" />
-    <div class="categoryList">
-      <select v-model="category">
-        <option
-          v-for="(category, idx) in categoryList"
-          :key="idx"
-          :value="category"
-        >
-          {{ category }}
-        </option>
-      </select>
-    </div>
-    <input placeholder="Paument amount" type="number" v-model.number="value" />
-    <button class="btn add-btn" @click="onClick">ADD <span>+</span></button>
-  </div>
+  <v-card class="text-left pa-8">
+    <v-text-field v-model="date" label="Date" />
+    <v-select
+          :items="categoryList"
+          label="Category"
+          v-model="category"
+        ></v-select>
+    <v-text-field v-model.number="value" label="Value" />
+    <v-btn @click="onClick">Save!</v-btn>
+  </v-card>
 </template>
 
 <script>
@@ -24,10 +18,17 @@ export default {
   name: "AddPaymentForm",
   data() {
     return {
+      id: "",
       date: "",
       category: "",
       value: "",
     };
+  },
+  props: {
+    payments: {
+      type: Array,
+      default: () => [],
+    }
   },
   computed: {
     ...mapGetters({ categoryList: "getCategoryList" }),
@@ -44,12 +45,14 @@ export default {
     ...mapActions(["fetchCategory"]),
     onClick() {
       const data = {
+        id: this.payments.length + 1,
         date: this.date || this.getCurrentDate,
         category: this.category,
         value: this.value,
       };
       this.addPaymentListData(data);
       this.$emit("addNewPayment", data);
+      this.$root.$refs.PieChart.setup();
     },
   },
   async mounted() {
@@ -63,67 +66,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.wrapper {
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
-  input {
-    padding: 10px;
-    outline: none;
-    border: 1px solid #f1f1f1;
-    border-bottom: 2px solid #d0d0d0;
-    &::placeholder {
-      color: #d0d0d0;
-    }
-    &:focus {
-      border-color: #116a61;
-      box-shadow: 0 0 5px rgba(17, 106, 97, 1);
-    }
-  }
-  select {
-    width: 100%;
-    padding: 10px;
-    outline: none;
-    cursor: pointer;
-    border: 1px solid #f1f1f1;
-    border-bottom: 2px solid #d0d0d0;
-    color: #d0d0d0;
-    &:focus {
-      font-weight: 700;
-      color: #030303;
-      border-color: #116a61;
-      box-shadow: 0 0 5px rgba(17, 106, 97, 1);
-    }
-    option {
-      font-weight: 700;
-      color: #030303;
-    }
-  }
-  .add-btn {
-    padding: 5px 10px 5px 30px;
-    display: flex;
-    gap: 20px;
-  }
-}
-
-.btn {
-  position: relative;
-  padding: 10px 20px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  background: #26a79a;
-  transition: background 0.3s ease;
-  &:hover {
-    background: #29e5d2;
-  }
-  &:active {
-    top: 1px;
-    background: #116a61;
-  }
-}
-</style>

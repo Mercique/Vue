@@ -1,46 +1,63 @@
 <template>
-  <main>
-    <div>
-      <h1 class="title">My personal costs</h1>
-      <!-- <add-payment-form /> -->
-      <payments-display :items="currentElements" />
-      <pagination
-        :cur="page"
-        :n="n"
-        :length="paymentsList.length"
-        @paginate="changePage"
-      />
-      <button @click="openModal">Add new cost +</button>
-    </div>
-    <pie-chart />
-  </main>
+    <v-container>
+      <v-row>
+        <v-col>
+          <div class="text-h5 text-sm-h3 mb-8">My personal costs</div>
+          <v-dialog
+            v-model="dialog"
+            width="500"
+          >
+          <template v-slot:activator="{on}">
+            <v-btn color="teal" dark v-on="on">
+              ADD NEW COST <v-icon>mdi-plus</v-icon>
+            </v-btn>
+            </template>
+              <add-payment-form @addNewPayment="dialog=false" :payments="paymentsList" />
+            </v-dialog>
+              <payments-display :items="currentElements" />
+              <pagination
+                :cur="page"
+                :n="n"
+                :length="paymentsList.length"
+                @paginate="changePage"
+              />
+      </v-col>
+      <v-col>
+        <pie-chart :payments="paymentsList" :category="categoryList" />
+      </v-col>
+    </v-row>
+  </v-container>
+
 </template>
 
 <script>
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import { mapMutations, mapGetters, mapActions } from "vuex";
-import Pagination from "../components/Pagination.vue";
-import PieChart from "../components/PieChart.vue";
+import AddPaymentForm from '../components/AddPaymentForm.vue';
+import PieChart from '../components/PieChart.vue';
+import Pagination from '../components/Pagination.vue';
 export default {
   name: "Dashboard",
   components: {
     PaymentsDisplay,
-    Pagination,
+    AddPaymentForm,
     PieChart,
+    Pagination,
   },
   data() {
     return {
       addFormShow: false,
+      dialog: false,
       settings: {
         content: "addPaymentForm",
         header: "Add new cost",
       },
       page: 1,
-      n: 5,
+      n: 10,
     };
   },
   computed: {
-    ...mapGetters({ paymentsList: "getPaymentsList" }),
+    ...mapGetters({ paymentsList: "getPaymentsList", categoryList: "getCategoryList" }),
     total() {
       return this.$store.getters.getPaymentsListFullValuePrice;
     },
@@ -71,6 +88,4 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
+<style></style>

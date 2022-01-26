@@ -28,27 +28,27 @@ export default {
       this.$context.close();
     },
     onClose() {
-        this.items = [];
-        this.isShow = false;
+      this.items = [];
+      this.isShow = false;
     },
-    onShown({items, caller}) {
-        this.items = items;
-        this.isShow = true;
-        this.setPosition(caller);
+    onShown({ items, caller }) {
+      this.items = items;
+      this.isShow = true;
+      this.setPosition(caller);
     },
     setPosition(caller) {
-        const pos = caller.getBoundingClientRect();
-        this.xPos = pos.left;
-        this.yPos = pos.top;
+      const pos = caller.getBoundingClientRect();
+      this.xPos = pos.left;
+      this.yPos = pos.top;
     },
   },
   computed: {
-      styles() {
-          return {
-              top: `${this.yPos + 1}px`,
-              left: `${this.xPos + 36}px`,
-          };
-      },
+    styles() {
+      return {
+        top: `${this.yPos + 1}px`,
+        left: `${this.xPos + 36}px`,
+      };
+    },
   },
   mounted() {
     this.$context.EventBus.$on("show", this.onShown);

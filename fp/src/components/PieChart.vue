@@ -1,26 +1,35 @@
 <template>
-  <canvas ref="canvas"></canvas>
+    <canvas ref="canvas"></canvas>
 </template>
 
 <script>
 import { Pie } from "vue-chartjs";
+
 export default {
-  name: "Pie",
+  name: "PieChart",
   extends: Pie,
-  data() {
-    return {
-      records: [],
-    };
+  props: {
+    payments: {
+      type: Array,
+      default: () => [],
+    },
+    category: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  created() {
+    this.$root.$refs.PieChart = this;
   },
   methods: {
-    setup(category) {
+    setup() {
       this.renderChart({
-        labels: category,
+        labels: this.category,
         datasets: [
           {
             label: "Расходы по категориям",
-            data: category.map((el) => {
-              return this.records.reduce((total, cur) => {
+            data: this.category.map((el) => {
+              return this.payments.reduce((total, cur) => {
                 if (el === cur.category) {
                   total += cur.value;
                 }
@@ -49,15 +58,10 @@ export default {
       });
     },
   },
-  async mounted() {
-    await this.$store.dispatch("fetchCategory");
-    this.records = this.$store.state.paymentsList;
-    const category = this.$store.state.categoryList;
-
-    this.setup(category);
+  mounted() {
+    this.setup();
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

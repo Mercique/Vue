@@ -1,96 +1,35 @@
 <template>
-  <div id="app">
-    <div class="wrapper">
-      <header>
-        <router-link to="/dashboard">Dashboard</router-link> /
-        <router-link to="/about">About</router-link> /
-        <router-link to="/fastcost">Fast Cost</router-link> /
-        <span @click="goToPageFound">notfound</span>
-      </header>
-      <main>
-        <router-view />
-      </main>
-      <transition name="fade">
-        <modal-window-add-payment-form
-          :settings="settings"
-          :componentName="componentName"
-          v-if="componentName"
-        />
-      </transition>
-      <transition name="fade">
-        <context-menu />
-      </transition>
-    </div>
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+      flat
+    >
+
+    <v-btn plain :ripple="false" to="/dashboard">Dashboard</v-btn>
+    
+    <v-btn plain :ripple="false" to="/about">About</v-btn>
+    
+    </v-app-bar>
+
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import ContextMenu from "./components/ContextMenu.vue";
-import { mapActions } from "vuex";
+import {mapActions} from 'vuex'
 export default {
-  components: {
-    ModalWindowAddPaymentForm: () =>
-      import(
-        /* webpackChunkName: "Modal" */ "./components/ModalWindowAddPaymentForm.vue"
-      ),
-    ContextMenu,
-  },
-  name: "App",
-  data() {
-    return {
-      settings: {},
-      componentName: "",
-    };
-  },
+  name: 'App',
+  data: () => ({
+    //
+  }),
   methods: {
-    ...mapActions(['fetchData']),
-    goToPageFound() {
-      if (this.$route.name === "notfound") return;
-      this.$router.push({
-        name: "notfound",
-      });
-    },
-    onShow({ name, settings }) {
-      this.componentName = name;
-      this.settings = settings;
-    },
-    onHide() {
-      this.settings = {};
-      this.componentName = "";
-    },
+    ...mapActions(["fetchData", "fetchCategory"]),
   },
   async created() {
     await this.fetchData();
-  },
-  mounted() {
-    this.$modal.EventBus.$on("show", this.onShow);
-    this.$modal.EventBus.$on("hide", this.onHide);
-  },
-  beforeDestroy() {
-    this.$modal.EventBus.$off("show");
-    this.$modal.EventBus.$off("hide");
+    await this.fetchCategory();
   },
 };
 </script>
-
-<style lang="scss" scoped>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-h1 {
-  font-size: 40px;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

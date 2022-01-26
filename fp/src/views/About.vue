@@ -1,5 +1,8 @@
 <template>
-  <div> about <div>about <button @click="openModal">Open</button></div></div>
+  <div>
+    about
+    <div>about <button @click="openModal">Open</button></div>
+  </div>
 </template>
 
 <script>
@@ -16,6 +19,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

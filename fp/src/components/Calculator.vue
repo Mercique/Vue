@@ -17,12 +17,12 @@
     </div>
     <div class="keyboard">
       <label>
-        <input type="checkbox" v-model="checked">
+        <input type="checkbox" v-model="checked" />
         Отобразить экранную клавиатуру
       </label>
       <div class="keyboard__box" v-if="checked">
-        <button 
-          v-for="key in keys" 
+        <button
+          v-for="key in keys"
           :key="key"
           @click="addNums(key)"
           :disabled="!picked"
@@ -33,17 +33,21 @@
       </div>
       <div class="keyboard__switch-inputs">
         <label>
-          <input type="radio" name="radio" value="operand1" v-model="picked">
+          <input type="radio" name="radio" value="operand1" v-model="picked" />
           Операнд 1
         </label>
         <label>
-          <input type="radio" name="radio" value="operand2" v-model="picked">
+          <input type="radio" name="radio" value="operand2" v-model="picked" />
           Операнд 2
         </label>
       </div>
     </div>
     <div class="logs">
-      <div class="logs__items" v-for="(item, id, idx) in logs" :key="`list_${id}`">
+      <div
+        class="logs__items"
+        v-for="(item, id, idx) in logs"
+        :key="`list_${id}`"
+      >
         {{ item }} ({{ idx }})
       </div>
     </div>
@@ -55,15 +59,15 @@ export default {
   name: "Calculator",
   data() {
     return {
-      keys: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      keys: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
       operands: ["+", "-", "/", "*", "**", "//"],
       operand1: 0,
       operand2: 0,
       error: "",
       result: 0,
       checked: false,
-      picked: '',
-      logs: {}
+      picked: "",
+      logs: {},
     };
   },
   methods: {
@@ -113,12 +117,12 @@ export default {
       this.result = Math.floor(this.operand1 / this.operand2);
     },
     addNums(key) {
-      this[this.picked] = +((this[this.picked] += key).replace(/^0/, ''));
+      this[this.picked] = +(this[this.picked] += key).replace(/^0/, "");
     },
     delNums() {
-      this[this.picked] = +(String(this[this.picked]).slice(0, -1));
-    }
-  }
+      this[this.picked] = +String(this[this.picked]).slice(0, -1);
+    },
+  },
 };
 </script>
 
